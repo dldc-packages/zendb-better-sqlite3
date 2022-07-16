@@ -1,17 +1,22 @@
 import { IDriver, IDriverDatabase, IDriverStatement } from 'zendb';
 import Database from 'better-sqlite3';
+import { rmSync, renameSync } from 'node:fs';
 
 export class Driver implements IDriver<DriverDatabase> {
   connect(path: string): DriverDatabase {
     return new DriverDatabase(new Database(path));
   }
 
-  remove(_path: string): void {
-    throw new Error('Method not implemented.');
+  remove(path: string): void {
+    try {
+      rmSync(path);
+    } catch (error) {
+      return;
+    }
   }
 
-  rename(_oldPath: string, _newPath: string): void {
-    throw new Error('Method not implemented.');
+  rename(oldPath: string, newPath: string): void {
+    renameSync(oldPath, newPath);
   }
 }
 
@@ -26,8 +31,8 @@ export class DriverDatabase implements IDriverDatabase<DriverStatement> {
     return new DriverStatement(this.db.prepare(source));
   }
 
-  transaction(_fn: () => void): void {
-    throw new Error('Method not implemented.');
+  transaction(fn: () => void): void {
+    this.db.transaction(fn);
   }
 
   exec(source: string): this {
