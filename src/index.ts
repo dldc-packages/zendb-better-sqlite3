@@ -65,10 +65,6 @@ export class DriverStatement implements IDriverStatement {
     return { changes: res.changes };
   }
 
-  get(...params: any[]) {
-    return this.statement.get(...params);
-  }
-
   all(...params: any[]): any[] {
     return this.statement.all(...params);
   }
@@ -79,7 +75,7 @@ export class DriverStatement implements IDriverStatement {
   }
 
   free() {
-    // Do nothing
+    // Do nothing (not needed with better-sqlite3)
     return;
   }
 }
