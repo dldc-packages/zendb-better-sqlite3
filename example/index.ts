@@ -1,4 +1,5 @@
-import * as zen from '../src';
+import * as zen from 'zendb';
+import { Driver } from '../src';
 import { schema as v001 } from './migrations/001';
 import { resolve } from 'path';
 import { mkdirSync } from 'fs';
@@ -14,7 +15,9 @@ try {
   //
 }
 
-const migrations = zen.Migrations.create({
+const driver = new Driver();
+
+const migrations = zen.Migrations.create(driver, {
   id: 'init',
   description: 'Initialize the database',
   schema: v001,
@@ -29,11 +32,15 @@ const db = migrations.applySync({
 
 const userByMail = db.tables.users
   .query()
-  .where({ email: 'e.dldc@gmail.com' })
+  .filter({ email: 'e.dldc@gmail.com' })
   .select({ email: true, name: true })
   .all();
 
-const firstTask = db.tables.tasks.query().maybeFirst();
+console.log({ userByMail });
+
+const firstTask = db.tables.tasks.query().select({ id: true, name: true }).maybeFirst();
+
+console.log({ firstTask });
 
 const newTask = db.tables.tasks.insert({
   id: nanoid(10),
@@ -48,17 +55,21 @@ const newTask = db.tables.tasks.insert({
   big: 12n,
 });
 
+console.log({ newTask });
+
 db.tables.spaces.delete({ id: '' }, { limit: 1 });
 db.tables.spaces.deleteOne({ id: '' });
 
 const tasksWithUsers = db.tables.tasks
   .query()
-  .limit(10)
+  .take(10)
   .select({ id: true, name: true, date: true })
   .join('id', 'task_user', 'taskId')
   .joinOne('userEmail', 'users', 'email')
   .select({ email: true, name: true })
   .all();
+
+console.log({ tasksWithUsers });
 
 // tasksWithUsers[0].task_user[0].email;
 

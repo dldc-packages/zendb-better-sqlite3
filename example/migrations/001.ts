@@ -1,4 +1,4 @@
-import * as zen from '../../src';
+import * as zen from 'zendb';
 
 export type RepeatMode = 'daily' | 'weekly' | 'monthly';
 
