@@ -2,21 +2,44 @@ import { IDriver, IDriverDatabase, IDriverStatement } from 'zendb';
 import Database from 'better-sqlite3';
 import { rmSync, renameSync } from 'node:fs';
 
+export type IDriverOptions = {
+  readonly databasePath: string;
+  readonly migrationDatabasePath: string;
+};
+
 export class Driver implements IDriver<DriverDatabase> {
-  connect(path: string): DriverDatabase {
-    return new DriverDatabase(new Database(path));
+  public readonly options: IDriverOptions;
+
+  constructor(options: IDriverOptions) {
+    this.options = options;
   }
 
-  remove(path: string): void {
+  openMain(): DriverDatabase {
+    return new DriverDatabase(new Database(this.options.databasePath));
+  }
+
+  openMigration(): DriverDatabase {
+    return new DriverDatabase(new Database(this.options.migrationDatabasePath));
+  }
+
+  removeMain(): void {
     try {
-      rmSync(path);
+      rmSync(this.options.databasePath);
     } catch (error) {
       return;
     }
   }
 
-  rename(oldPath: string, newPath: string): void {
-    renameSync(oldPath, newPath);
+  removeMigration(): void {
+    try {
+      rmSync(this.options.migrationDatabasePath);
+    } catch (error) {
+      return;
+    }
+  }
+
+  applyMigration(): void {
+    renameSync(this.options.migrationDatabasePath, this.options.databasePath);
   }
 }
 

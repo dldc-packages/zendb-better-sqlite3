@@ -15,7 +15,10 @@ try {
   //
 }
 
-const driver = new Driver();
+const driver = new Driver({
+  databasePath: resolve(DATA_PATH, 'database.db'),
+  migrationDatabasePath: resolve(DATA_PATH, 'migration-database.db'),
+});
 
 const migrations = zen.Migrations.create(driver, {
   id: 'init',
@@ -25,10 +28,7 @@ const migrations = zen.Migrations.create(driver, {
 
 export type Db = typeof db;
 
-const db = migrations.applySync({
-  databasePath: resolve(DATA_PATH, 'database.db'),
-  migrationDatabasePath: resolve(DATA_PATH, 'migration-database.db'),
-});
+const db = migrations.applySync();
 
 const userByMail = db.tables.users
   .query()
