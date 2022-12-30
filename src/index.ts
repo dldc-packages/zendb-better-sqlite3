@@ -19,15 +19,18 @@ export const Database = (() => {
         return op.parse();
       }
       if (op.kind === 'Delete') {
-        const res = db.prepare(op.sql).run(op.params);
+        const stmt = db.prepare(op.sql);
+        const res = op.params ? stmt.run(op.params) : stmt.run();
         return op.parse({ deleted: res.changes });
       }
       if (op.kind === 'Update') {
-        const res = db.prepare(op.sql).run(op.params);
+        const stmt = db.prepare(op.sql);
+        const res = op.params ? stmt.run(op.params) : stmt.run();
         return op.parse({ updated: res.changes });
       }
       if (op.kind === 'Query') {
-        const res = db.prepare(op.sql).all(op.params);
+        const stmt = db.prepare(op.sql);
+        const res = op.params ? stmt.all(op.params) : stmt.all();
         return op.parse(res);
       }
       if (op.kind === 'ListTables') {
