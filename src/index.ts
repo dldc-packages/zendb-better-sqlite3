@@ -1,104 +1,44 @@
-import { IDriver, IDriverDatabase, IDriverStatement } from 'zendb';
-import Database from 'better-sqlite3';
-import { rmSync, renameSync } from 'node:fs';
+import * as zen from 'zendb';
+import SqliteDatabase from 'better-sqlite3';
 
-export type IDriverOptions = {
-  readonly databasePath: string;
-  readonly migrationDatabasePath: string;
-};
+export type IDataBase<Schema extends zen.ISchemaAny> = zen.IDatabase<Schema, 'Result'>;
 
-export class Driver implements IDriver<DriverDatabase> {
-  public readonly options: IDriverOptions;
+export const Database = (() => {
+  return { create };
 
-  constructor(options: IDriverOptions) {
-    this.options = options;
-  }
+  function create<Schema extends zen.ISchemaAny>(schema: Schema, db: SqliteDatabase.Database) {
+    return zen.Database.create<Schema, 'Result'>(schema, operationResolver);
 
-  openMain(): DriverDatabase {
-    return new DriverDatabase(new Database(this.options.databasePath));
-  }
-
-  openMigration(): DriverDatabase {
-    return new DriverDatabase(new Database(this.options.migrationDatabasePath));
-  }
-
-  removeMain(): void {
-    try {
-      rmSync(this.options.databasePath);
-    } catch (error) {
-      return;
+    function operationResolver(op: zen.IOperation) {
+      if (op.kind === 'CreateTable') {
+        db.exec(op.sql);
+        return;
+      }
+      if (op.kind === 'Insert') {
+        db.prepare(op.sql).run(...op.params);
+        return op.parse();
+      }
+      if (op.kind === 'Delete') {
+        const res = db.prepare(op.sql).run(op.params);
+        return op.parse({ deleted: res.changes });
+      }
+      if (op.kind === 'Update') {
+        const res = db.prepare(op.sql).run(op.params);
+        return op.parse({ updated: res.changes });
+      }
+      if (op.kind === 'Query') {
+        const res = db.prepare(op.sql).all(op.params);
+        return op.parse(res);
+      }
+      if (op.kind === 'ListTables') {
+        const res = db.prepare(op.sql).all();
+        return op.parse(res);
+      }
+      return expectNever(op);
     }
   }
 
-  removeMigration(): void {
-    try {
-      rmSync(this.options.migrationDatabasePath);
-    } catch (error) {
-      return;
-    }
+  function expectNever(val: never): never {
+    throw new Error(`Unexpected value: ${val}`);
   }
-
-  applyMigration(): void {
-    renameSync(this.options.migrationDatabasePath, this.options.databasePath);
-  }
-}
-
-export class DriverDatabase implements IDriverDatabase<DriverStatement> {
-  public readonly db: Database.Database;
-
-  constructor(db: Database.Database) {
-    this.db = db;
-  }
-
-  prepare(source: string): DriverStatement {
-    return new DriverStatement(this.db.prepare(source));
-  }
-
-  transaction(fn: () => void): void {
-    this.db.transaction(fn);
-  }
-
-  exec(source: string): this {
-    this.db.exec(source);
-    return this;
-  }
-
-  close(): void {
-    this.db.close();
-  }
-
-  getUserVersion(): number {
-    return this.db.pragma('user_version', { simple: true });
-  }
-
-  setUserVersion(version: number): void {
-    this.db.pragma(`user_version = ${version}`, { simple: true });
-  }
-}
-
-export class DriverStatement implements IDriverStatement {
-  public readonly statement: Database.Statement;
-
-  constructor(statement: Database.Statement) {
-    this.statement = statement;
-  }
-
-  run(...params: any[]): { changes: number } {
-    const res = this.statement.run(...params);
-    return { changes: res.changes };
-  }
-
-  all(...params: any[]): any[] {
-    return this.statement.all(...params);
-  }
-
-  bind(...params: any[]): this {
-    this.statement.bind(...params);
-    return this;
-  }
-
-  free() {
-    // Do nothing (not needed with better-sqlite3)
-    return;
-  }
-}
+})();
