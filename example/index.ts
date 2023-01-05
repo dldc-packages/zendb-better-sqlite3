@@ -17,47 +17,60 @@ const db = new SqlDatabase(resolve(DATA_PATH, 'database.db'));
 
 const zenDb = Database.create(schema, db);
 
-const userByMail = zenDb.tables.users
-  .query()
-  .filter({ email: 'e.dldc@gmail.com' })
-  .select({ email: true, name: true })
-  .all();
+const tables = zenDb.exec(Database.listTables());
+
+if (tables.length === 0) {
+  console.log('Initializing database...');
+  zenDb.execMany(zenDb.init());
+}
+
+const userByMail = zenDb.exec(
+  zenDb.tables.users
+    .select()
+    .filter({ email: 'e.dldc@gmail.com' })
+    .fields({ email: true, name: true })
+    .all()
+);
 
 console.log({ userByMail });
 
-const firstTask = zenDb.tables.tasks.query().select({ id: true, name: true }).maybeFirst();
+const firstTask = zenDb.exec(
+  zenDb.tables.tasks.select().fields({ id: true, name: true }).maybeFirst()
+);
 
 console.log({ firstTask });
 
-const newTask = zenDb.tables.tasks.insert({
-  id: nanoid(10),
-  chainId: '',
-  color: '',
-  date: new Date(),
-  name: '',
-  infos: '',
-  priority: 'low',
-  repeat: null,
-  spaceId: '',
-  big: 12n,
-});
+const newTask = zenDb.exec(
+  zenDb.tables.tasks.insert({
+    id: nanoid(10),
+    chainId: '',
+    color: '',
+    date: new Date(),
+    name: '',
+    infos: '',
+    priority: 'low',
+    repeat: null,
+    spaceId: '',
+    big: 12n,
+  })
+);
 
 console.log({ newTask });
 
-zenDb.tables.spaces.delete({ id: '' }, { limit: 1 });
-zenDb.tables.spaces.deleteOne({ id: '' });
+zenDb.exec(zenDb.tables.spaces.delete({ id: '' }, { limit: 1 }));
+zenDb.exec(zenDb.tables.spaces.deleteOne({ id: '' }));
 
-const tasksWithUsers = zenDb.tables.tasks
-  .query()
-  .take(10)
-  .select({ id: true, name: true, date: true })
-  .join('id', 'task_user', 'taskId')
-  .joinOne('userEmail', 'users', 'email')
-  .select({ email: true, name: true })
-  .all();
+const tasksWithUsers = zenDb.exec(
+  zenDb.tables.tasks
+    .select()
+    .take(10)
+    .fields({ id: true, name: true, date: true })
+    .join('id', 'task_user', 'taskId')
+    .joinOne('userEmail', 'users', 'email')
+    .fields({ email: true, name: true })
+    .all()
+);
 
 console.log({ tasksWithUsers });
 
-// tasksWithUsers[0].task_user[0].email;
-
-zenDb.tables.tasks.delete({ id: 'yolo' });
+zenDb.exec(zenDb.tables.tasks.delete({ id: 'yolo' }));

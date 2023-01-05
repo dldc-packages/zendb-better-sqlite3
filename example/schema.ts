@@ -15,22 +15,16 @@ const users = zen.Schema.table({
   name: zen.Schema.column.dt.text(),
 });
 
-export type User = zen.Infer<typeof users>;
-
 const spaces = zen.Schema.table({
   id: zen.Schema.column.dt.text().primary(),
   slug: zen.Schema.column.dt.text().unique(),
   name: zen.Schema.column.dt.text(),
 });
 
-export type Space = zen.Infer<typeof spaces>;
-
 const user_space = zen.Schema.table({
   userEmail: zen.Schema.column.dt.text().primary(),
   spaceId: zen.Schema.column.dt.text().primary(),
 });
-
-export type UserSpace = zen.Infer<typeof user_space>;
 
 const customDt = zen.Datatype.create<bigint, string>({
   name: 'bigint',
@@ -54,16 +48,18 @@ const tasks = zen.Schema.table({
   big: zen.Schema.column.create(customDt).nullable(),
 });
 
-export type Task = zen.Infer<typeof tasks>;
-
 const task_user = zen.Schema.table({
   taskId: zen.Schema.column.dt.text().primary(),
   userEmail: zen.Schema.column.dt.text().primary(),
 });
 
-export type TaskUser = zen.Infer<typeof task_user>;
-
 export const schema = zen.Schema.define({
   tables: { users, spaces, tasks, user_space, task_user },
   strict: false,
 });
+
+export type User = zen.Infer<typeof schema, 'users'>;
+export type Space = zen.Infer<typeof schema, 'spaces'>;
+export type UserSpace = zen.Infer<typeof schema, 'user_space'>;
+export type Task = zen.Infer<typeof schema, 'tasks'>;
+export type TaskUser = zen.Infer<typeof schema, 'task_user'>;

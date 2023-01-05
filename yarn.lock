@@ -5731,10 +5731,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zendb@5.0.0-4:
-  version "5.0.0-4"
-  resolved "https://registry.yarnpkg.com/zendb/-/zendb-5.0.0-4.tgz#c8b15b380350d3d245db37a1e19f3387f7985a8b"
-  integrity sha512-o8WdsLn4sh+wAondS72pXVHy9bT9WJ+koD5jkFXGyOupI/WRKW92kUO0dJZqvK/YCQm/XITxqmmo5t3o3Kw/cQ==
+zendb@5.0.0-6:
+  version "5.0.0-6"
+  resolved "https://registry.yarnpkg.com/zendb/-/zendb-5.0.0-6.tgz#2989aecb0e0f3dd714d3e0b51bfcc8c0762e7a56"
+  integrity sha512-b8W9Uwq1RLiM/EJEuzWNGAlUTAOXlcT4THKazjfA2pJ72dk0iMhW3NggvCljRKvJaQi0sJ6lLMPfUwUEk3qNSQ==
   dependencies:
     zensqlite "^1.9.0"
 

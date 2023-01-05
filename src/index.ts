@@ -1,43 +1,65 @@
 import * as zen from 'zendb';
 import SqliteDatabase from 'better-sqlite3';
 
-export type IDataBase<Schema extends zen.ISchemaAny> = zen.IDatabase<Schema, 'Result'>;
+export interface IDatabase<Schema extends zen.ISchemaAny> extends zen.IDatabase<Schema> {
+  exec<Op extends zen.IOperation>(op: Op): zen.IOperationResult<Op>;
+  execMany<Op extends zen.IOperation>(ops: Op[]): zen.IOperationResult<Op>[];
+}
 
 export const Database = (() => {
-  return { create };
+  return { create, listTables: zen.Database.listTables };
 
-  function create<Schema extends zen.ISchemaAny>(schema: Schema, db: SqliteDatabase.Database) {
-    return zen.Database.create<Schema, 'Result'>(schema, operationResolver);
+  function create<Schema extends zen.ISchemaAny>(
+    schema: Schema,
+    db: SqliteDatabase.Database
+  ): IDatabase<Schema> {
+    const zenDb = zen.Database.create(schema);
 
-    function operationResolver(op: zen.IOperation) {
+    return {
+      ...zenDb,
+      exec,
+      execMany,
+    };
+
+    function exec<Op extends zen.IOperation>(op: Op): zen.IOperationResult<Op> {
       if (op.kind === 'CreateTable') {
         db.exec(op.sql);
-        return;
+        return opResult<zen.ICreateTableOperation>(null);
       }
       if (op.kind === 'Insert') {
         db.prepare(op.sql).run(...op.params);
-        return op.parse();
+        return opResult<zen.IInsertOperation<any>>(op.parse());
       }
       if (op.kind === 'Delete') {
         const stmt = db.prepare(op.sql);
         const res = op.params ? stmt.run(op.params) : stmt.run();
-        return op.parse({ deleted: res.changes });
+        return opResult<zen.IDeleteOperation>(op.parse({ deleted: res.changes }));
       }
       if (op.kind === 'Update') {
         const stmt = db.prepare(op.sql);
         const res = op.params ? stmt.run(op.params) : stmt.run();
-        return op.parse({ updated: res.changes });
+        return opResult<zen.IUpdateOperation>(op.parse({ updated: res.changes }));
       }
       if (op.kind === 'Query') {
         const stmt = db.prepare(op.sql);
         const res = op.params ? stmt.all(op.params) : stmt.all();
-        return op.parse(res);
+        return opResult<zen.IQueryOperation<any>>(op.parse(res));
       }
       if (op.kind === 'ListTables') {
         const res = db.prepare(op.sql).all();
-        return op.parse(res);
+        return opResult<zen.IListTablesOperation>(op.parse(res));
       }
       return expectNever(op);
+    }
+
+    function opResult<Op extends zen.IOperation>(
+      res: zen.IOperationResult<Op>
+    ): zen.IOperationResult<zen.IOperation> {
+      return res;
+    }
+
+    function execMany<Op extends zen.IOperation>(ops: Op[]): zen.IOperationResult<Op>[] {
+      return ops.map((op) => exec(op));
     }
   }
 
