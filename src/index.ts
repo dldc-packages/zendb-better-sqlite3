@@ -4,6 +4,7 @@ import SqliteDatabase from 'better-sqlite3';
 export interface IDatabase<Schema extends zen.ISchemaAny> extends zen.IDatabase<Schema> {
   exec<Op extends zen.IOperation>(op: Op): zen.IOperationResult<Op>;
   execMany<Op extends zen.IOperation>(ops: Op[]): zen.IOperationResult<Op>[];
+  readonly sqlDb: SqliteDatabase.Database;
 }
 
 export const Database = (() => {
@@ -11,7 +12,7 @@ export const Database = (() => {
 
   function create<Schema extends zen.ISchemaAny>(
     schema: Schema,
-    db: SqliteDatabase.Database
+    sqlDb: SqliteDatabase.Database
   ): IDatabase<Schema> {
     const zenDb = zen.Database.create(schema);
 
@@ -19,34 +20,35 @@ export const Database = (() => {
       ...zenDb,
       exec,
       execMany,
+      sqlDb,
     };
 
     function exec<Op extends zen.IOperation>(op: Op): zen.IOperationResult<Op> {
       if (op.kind === 'CreateTable') {
-        db.exec(op.sql);
+        sqlDb.exec(op.sql);
         return opResult<zen.ICreateTableOperation>(null);
       }
       if (op.kind === 'Insert') {
-        db.prepare(op.sql).run(...op.params);
+        sqlDb.prepare(op.sql).run(...op.params);
         return opResult<zen.IInsertOperation<any>>(op.parse());
       }
       if (op.kind === 'Delete') {
-        const stmt = db.prepare(op.sql);
+        const stmt = sqlDb.prepare(op.sql);
         const res = op.params ? stmt.run(op.params) : stmt.run();
         return opResult<zen.IDeleteOperation>(op.parse({ deleted: res.changes }));
       }
       if (op.kind === 'Update') {
-        const stmt = db.prepare(op.sql);
+        const stmt = sqlDb.prepare(op.sql);
         const res = op.params ? stmt.run(op.params) : stmt.run();
         return opResult<zen.IUpdateOperation>(op.parse({ updated: res.changes }));
       }
       if (op.kind === 'Query') {
-        const stmt = db.prepare(op.sql);
+        const stmt = sqlDb.prepare(op.sql);
         const res = op.params ? stmt.all(op.params) : stmt.all();
         return opResult<zen.IQueryOperation<any>>(op.parse(res));
       }
       if (op.kind === 'ListTables') {
-        const res = db.prepare(op.sql).all();
+        const res = sqlDb.prepare(op.sql).all();
         return opResult<zen.IListTablesOperation>(op.parse(res));
       }
       return expectNever(op);
