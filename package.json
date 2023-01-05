@@ -63,11 +63,11 @@
     "tslib": "^2.4.1",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "zendb": "5.0.0-6"
+    "zendb": "5.0.0-7"
   },
   "peerDependencies": {
     "better-sqlite3": "^7.6.2",
-    "zendb": "5.0.0-6"
+    "zendb": "5.0.0-7"
   },
   "publishConfig": {
     "access": "public",
