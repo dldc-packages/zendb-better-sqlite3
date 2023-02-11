@@ -1,7 +1,7 @@
 import * as zen from 'zendb';
 import SqliteDatabase from 'better-sqlite3';
 
-export interface IDatabase<Schema extends zen.ISchemaAny> extends zen.IDatabase<Schema> {
+export interface IDatabase {
   exec<Op extends zen.IOperation>(op: Op): zen.IOperationResult<Op>;
   execMany<Op extends zen.IOperation>(ops: Op[]): zen.IOperationResult<Op>[];
   readonly sqlDb: SqliteDatabase.Database;
@@ -10,14 +10,8 @@ export interface IDatabase<Schema extends zen.ISchemaAny> extends zen.IDatabase<
 export const Database = (() => {
   return { create, listTables: zen.Database.listTables };
 
-  function create<Schema extends zen.ISchemaAny>(
-    schema: Schema,
-    sqlDb: SqliteDatabase.Database
-  ): IDatabase<Schema> {
-    const zenDb = zen.Database.create(schema);
-
+  function create(sqlDb: SqliteDatabase.Database): IDatabase {
     return {
-      ...zenDb,
       exec,
       execMany,
       sqlDb,
@@ -29,7 +23,7 @@ export const Database = (() => {
         return opResult<zen.ICreateTableOperation>(null);
       }
       if (op.kind === 'Insert') {
-        sqlDb.prepare(op.sql).run(...op.params);
+        sqlDb.prepare(op.sql).run(op.params);
         return opResult<zen.IInsertOperation<any>>(op.parse());
       }
       if (op.kind === 'Delete') {

@@ -5731,16 +5731,16 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zendb@5.0.0-7:
-  version "5.0.0-7"
-  resolved "https://registry.yarnpkg.com/zendb/-/zendb-5.0.0-7.tgz#7e99152a7511f51e39ced68684d1218e1cc86c83"
-  integrity sha512-hauPPctbvZx3fPCHEjdB980nOgqYrPqoytAxKS/WMWJeMuba1enSdmiHCl5nUG0wa0fRea99T1AG/2HoK75gQA==
+zendb@5.0.0-8:
+  version "5.0.0-8"
+  resolved "https://registry.yarnpkg.com/zendb/-/zendb-5.0.0-8.tgz#128f62d138b3ac7f5474a46e1848f7657314cefd"
+  integrity sha512-wxp3zssY7YIbDbt/vvu1+eUM60z2hcBg2VI9s3yt8MXK/pZrHedvPRWlEMpWWSkNuJtWVhdNUXugHHBByTqONg==
   dependencies:
-    zensqlite "^1.9.0"
+    zensqlite "^2.0.0-4"
 
-zensqlite@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/zensqlite/-/zensqlite-1.9.0.tgz#d6130c8b219476c1e052402feb7705b5618bc8a6"
-  integrity sha512-/k7nO96pLu9tIQAI3B3IEgL15j6BbegNNtJ/5Ku75EuJwOlG+5GwWyCFgu45DtbuDhoWepkWSAFssOk801/Tdw==
+zensqlite@^2.0.0-4:
+  version "2.0.0-4"
+  resolved "https://registry.yarnpkg.com/zensqlite/-/zensqlite-2.0.0-4.tgz#3ea3040b118b7534cd0dc9384b690a37768501d7"
+  integrity sha512-T5PHObK1kvguI44qhnR3DKQMWDTDdpn7sIUt4PtN12vr33n8sKIItJZxwE7o23YBynAUQggd3ZGFO6ujICt6nQ==
   dependencies:
     tslib "^2.3.1"
