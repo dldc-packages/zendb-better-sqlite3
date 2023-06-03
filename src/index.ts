@@ -8,7 +8,7 @@ export interface IDatabase {
 }
 
 export const Database = (() => {
-  return { create, listTables: zen.Database.listTables };
+  return { create, listTables: zen.Database.listTables, createTables: zen.Database.createTables };
 
   function create(sqlDb: SqliteDatabase.Database): IDatabase {
     return {
@@ -39,11 +39,11 @@ export const Database = (() => {
       if (op.kind === 'Query') {
         const stmt = sqlDb.prepare(op.sql);
         const res = op.params ? stmt.all(op.params) : stmt.all();
-        return opResult<zen.IQueryOperation<any>>(op.parse(res));
+        return opResult<zen.IQueryOperation<any>>(op.parse(res as Record<string, any>[]));
       }
       if (op.kind === 'ListTables') {
         const res = sqlDb.prepare(op.sql).all();
-        return opResult<zen.IListTablesOperation>(op.parse(res));
+        return opResult<zen.IListTablesOperation>(op.parse(res as Record<string, any>[]));
       }
       return expectNever(op);
     }

@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { mkdirSync } from 'fs';
 import { nanoid } from 'nanoid';
 import SqlDatabase from 'better-sqlite3';
+import { Expr } from 'zendb';
 
 const DATA_PATH = resolve('example/data');
 
@@ -13,35 +14,36 @@ try {
   //
 }
 
-const db = new SqlDatabase(resolve(DATA_PATH, 'database.db'));
-
-const zenDb = Database.create(schema, db);
+const zenDb = Database.create(new SqlDatabase(resolve(DATA_PATH, 'database.db')));
 
 const tables = zenDb.exec(Database.listTables());
 
 if (tables.length === 0) {
   console.log('Initializing database...');
-  zenDb.execMany(zenDb.init());
+  zenDb.execMany(Database.createTables(schema, { strict: true }));
 }
 
 const userByMail = zenDb.exec(
-  zenDb.tables.users
-    .select()
-    .filter({ email: 'e.dldc@gmail.com' })
-    .fields({ email: true, name: true })
+  schema.users
+    .query()
+    .where((c) => Expr.equal(c.email, Expr.external('e.dldc@gmail.com')))
+    .select(({ email, name }) => ({ email, name }))
     .all()
 );
 
 console.log({ userByMail });
 
 const firstTask = zenDb.exec(
-  zenDb.tables.tasks.select().fields({ id: true, name: true }).maybeFirst()
+  schema.tasks
+    .query()
+    .select(({ id, name }) => ({ id, name }))
+    .maybeFirst()
 );
 
 console.log({ firstTask });
 
 const newTask = zenDb.exec(
-  zenDb.tables.tasks.insert({
+  schema.tasks.insert({
     id: nanoid(10),
     chainId: '',
     color: '',
@@ -57,20 +59,24 @@ const newTask = zenDb.exec(
 
 console.log({ newTask });
 
-zenDb.exec(zenDb.tables.spaces.delete({ id: '' }, { limit: 1 }));
-zenDb.exec(zenDb.tables.spaces.deleteOne({ id: '' }));
+zenDb.exec(schema.spaces.delete((cols) => Expr.equal(cols.id, Expr.external('')), { limit: 1 }));
+zenDb.exec(schema.spaces.deleteOne((cols) => Expr.equal(cols.id, Expr.external(''))));
 
-const tasksWithUsers = zenDb.exec(
-  zenDb.tables.tasks
-    .select()
-    .take(10)
-    .fields({ id: true, name: true, date: true })
-    .join('id', 'task_user', 'taskId')
-    .joinOne('userEmail', 'users', 'email')
-    .fields({ email: true, name: true })
-    .all()
-);
+// const tasksWithUsers = zenDb.exec(
+//   schema.tasks
+//     .query()
+//     .limit(Expr.literal(10))
+//     .select(({ id, name, date }) => ({ id, name, date }))
+//     .innerJoin(schema.task_user.query(), 'taskUser', cols => Expr.equal(cols.taskUser.taskId, cols.id))
+//     .innerJoin(schema.users.query(), 'user', cols => Expr.equal(cols.user.email, cols.taskUser.userEmail))
+//     .select(({  }) => ({
 
-console.log({ tasksWithUsers });
+//     }))
+//     // .joinOne('userEmail', 'users', 'email')
+//     // .fields({ email: true, name: true })
+//     // .all()
+// );
 
-zenDb.exec(zenDb.tables.tasks.delete({ id: 'yolo' }));
+// console.log({ tasksWithUsers });
+
+// zenDb.exec(zenDb.tables.tasks.delete({ id: 'yolo' }));
