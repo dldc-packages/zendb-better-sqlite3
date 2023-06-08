@@ -7,8 +7,8 @@ export interface IDatabase {
   readonly sqlDb: SqliteDatabase.Database;
 }
 
-export const Database = (() => {
-  return { create, listTables: zen.Database.listTables, createTables: zen.Database.createTables };
+export const BetterSqliteDatabase = (() => {
+  return { create };
 
   function create(sqlDb: SqliteDatabase.Database): IDatabase {
     return {
@@ -44,6 +44,14 @@ export const Database = (() => {
       if (op.kind === 'ListTables') {
         const res = sqlDb.prepare(op.sql).all();
         return opResult<zen.IListTablesOperation>(op.parse(res as Record<string, any>[]));
+      }
+      if (op.kind === 'Pragma') {
+        const res = sqlDb.prepare(op.sql).all();
+        return opResult<zen.IPragmaOperation<any>>(op.parse(res as Record<string, any>[]));
+      }
+      if (op.kind === 'PragmaSet') {
+        sqlDb.prepare(op.sql).run();
+        return opResult<zen.IPragmaSetOperation>(null);
       }
       return expectNever(op);
     }
