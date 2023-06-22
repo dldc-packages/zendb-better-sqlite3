@@ -56,9 +56,7 @@ export const BetterSqliteDatabase = (() => {
       return expectNever(op);
     }
 
-    function opResult<Op extends zen.IOperation>(
-      res: zen.IOperationResult<Op>
-    ): zen.IOperationResult<zen.IOperation> {
+    function opResult<Op extends zen.IOperation>(res: zen.IOperationResult<Op>): zen.IOperationResult<zen.IOperation> {
       return res;
     }
 
