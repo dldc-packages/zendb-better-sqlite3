@@ -1,15 +1,15 @@
 {
-  "name": "zendb-better-sqlite3",
+  "name": "@dldc/zendb-better-sqlite3",
   "version": "2.0.0-6",
   "description": "A local database",
   "keywords": [],
-  "homepage": "https://github.com/etienne-dldc/zendb-better-sqlite3#readme",
+  "homepage": "https://github.com/dldc-packages/zendb-better-sqlite3#readme",
   "bugs": {
-    "url": "https://github.com/etienne-dldc/zendb-better-sqlite3/issues"
+    "url": "https://github.com/dldc-packages/zendb-better-sqlite3/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/etienne-dldc/zendb-better-sqlite3.git"
+    "url": "git+https://github.com/dldc-packages/zendb-better-sqlite3.git"
   },
   "license": "MIT",
   "author": "Etienne Dldc <e.deladonchamps@gmail.com>",
@@ -38,9 +38,7 @@
     "typecheck": "tsc",
     "typecheck:watch": "tsc --watch"
   },
-  "dependencies": {
-    "tsx": "^3.12.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@types/node": "^20.3.1",
