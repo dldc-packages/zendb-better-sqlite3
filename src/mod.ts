@@ -1,4 +1,4 @@
-import * as zen from 'zendb';
+import * as zen from '@dldc/zendb';
 import SqliteDatabase from 'better-sqlite3';
 
 export interface IDatabase {
