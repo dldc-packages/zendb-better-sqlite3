@@ -1,6 +1,6 @@
 {
   "name": "@dldc/zendb-better-sqlite3",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A local database",
   "keywords": [],
   "homepage": "https://github.com/dldc-packages/zendb-better-sqlite3#readme",
