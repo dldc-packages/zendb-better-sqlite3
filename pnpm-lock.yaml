@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@dldc/zendb':
-    specifier: ^5.0.1
-    version: 5.0.1
+    specifier: ^5.0.2
+    version: 5.0.2
   '@types/better-sqlite3':
     specifier: ^7.6.4
     version: 7.6.4
@@ -94,14 +94,14 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@dldc/sqlite@2.0.1:
-    resolution: {integrity: sha512-ZS9YIROAHJ7fYl5nUY76oAkhZ/taHb2qeExHPiSil3G59hI3snsV1rUXWFomjBxPxANA+RZrFSrAZLXRc8Wnng==}
+  /@dldc/sqlite@2.0.2:
+    resolution: {integrity: sha512-+x8oj+prMwAPUU304BLKzUzDIHNRGM60LXrL4q0vB17su5l+n3KvZmYiuVvrDU8U1CUFy0T/7ftv8/UOdCrvrw==}
     dev: true
 
-  /@dldc/zendb@5.0.1:
-    resolution: {integrity: sha512-1PpVn2HujCdS8kA35lnzMmoSidZajCujSxDGz9UMXGHQaNqMYkoKuyETSCW/Js4Y7dqiukOQmRWPlTT/9l4oow==}
+  /@dldc/zendb@5.0.2:
+    resolution: {integrity: sha512-ZTEzxQQ+sT/lMFEnKgAiMAR4qqiwTcg5quF314lj+ZYCwvVps7R4uN4jGm6tjMcKCSndpBycStYSb5REVTG1yw==}
     dependencies:
-      '@dldc/sqlite': 2.0.1
+      '@dldc/sqlite': 2.0.2
     dev: true
 
   /@esbuild/android-arm64@0.18.11:
