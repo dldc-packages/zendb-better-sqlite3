@@ -41,12 +41,14 @@
     "typecheck:watch": "tsc --watch"
   },
   "devDependencies": {
+    "@dldc/zendb": "^5.1.0",
     "@types/better-sqlite3": "^7.6.5",
     "@types/node": "^20.6.3",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "@vitest/coverage-v8": "^0.34.5",
     "auto-changelog": "^2.4.0",
+    "better-sqlite3": "^8.6.0",
     "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
@@ -58,7 +60,7 @@
   },
   "peerDependencies": {
     "@dldc/zendb": "^5.1.0",
-    "better-sqlite3": "^8.4.0"
+    "better-sqlite3": "^8.6.0"
   },
   "packageManager": "pnpm@8.6.1",
   "publishConfig": {
