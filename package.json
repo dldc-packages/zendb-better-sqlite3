@@ -81,9 +81,9 @@
     "root": true
   },
   "devDependencies": {
-    "@dldc/zendb": "^5.1.1",
+    "@dldc/zendb": "^5.1.2",
     "@types/better-sqlite3": "^7.6.5",
-    "@types/node": "^20.8.2",
+    "@types/node": "^20.8.3",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
     "@vitest/coverage-v8": "^0.34.6",
