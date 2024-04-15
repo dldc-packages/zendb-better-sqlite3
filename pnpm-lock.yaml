@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@dldc/zendb':
-    specifier: ^6.6.0
-    version: 6.6.0
+    specifier: ^6.6.1
+    version: 6.6.1
   '@types/better-sqlite3':
     specifier: ^7.6.9
     version: 7.6.9
@@ -132,8 +132,8 @@ packages:
     resolution: {integrity: sha512-LDl0TEUD0NGKphZFw+/X8yhNTYVOiGhNaEe4/WRROkjz9B4B07OosrQLBJ9Dam2kxJ5WpmfAhqIQ6udgJsZyjw==}
     dev: true
 
-  /@dldc/zendb@6.6.0:
-    resolution: {integrity: sha512-cMbMNtybkatXQpYfNobhmaqbXcCCx79n+r1evkeww1HbIEgfJdM8CgR+6yuSw+UB+vtwrSUxQY+D6fb99wWrgA==}
+  /@dldc/zendb@6.6.1:
+    resolution: {integrity: sha512-cuJRNq/RGtjKqE3iSY7Prhg59nkRRKb0gtSBKvOZQuRfYt8umPn3wadC2+H8VeJ+QNxRguTAJEiwkNi1FTYzdA==}
     dependencies:
       '@dldc/erreur': 6.0.6
       '@dldc/sqlite': 2.0.7
