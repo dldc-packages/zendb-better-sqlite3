@@ -42,7 +42,7 @@
     "typecheck:watch": "tsc --watch"
   },
   "devDependencies": {
-    "@dldc/zendb": "npm:@jsr/dldc__zendb@^8.0.4",
+    "@dldc/zendb": "npm:@jsr/dldc__zendb@^9.0.0",
     "@eslint/js": "^9.10.0",
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^20.12.8",
@@ -59,10 +59,10 @@
     "vitest": "^2.1.1"
   },
   "peerDependencies": {
-    "@dldc/zendb": "^8.0.0",
+    "@dldc/zendb": "^9.0.0",
     "better-sqlite3": "^11.0.0"
   },
-  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
+  "packageManager": "pnpm@9.11.0+sha256.1c0e33f70e5df9eede84a357bdfa0b1f9dba6e58194628d48a1055756f553754",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"

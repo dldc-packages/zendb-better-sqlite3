@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@dldc/zendb':
-        specifier: npm:@jsr/dldc__zendb@^8.0.4
-        version: '@jsr/dldc__zendb@8.0.4'
+        specifier: npm:@jsr/dldc__zendb@^9.0.0
+        version: '@jsr/dldc__zendb@9.0.0'
       '@eslint/js':
         specifier: ^9.10.0
         version: 9.10.0
@@ -447,8 +447,8 @@ packages:
   '@jsr/dldc__sqlite@3.0.0':
     resolution: {integrity: sha512-5w+xndxSWFmUmxLqsPjS6ure+PLOaBNXsGxkVXIDLSg7aXUrdfcfReIZpIWerHs5ixKML+RtYDXAFX6gT/FT5A==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__sqlite/3.0.0.tgz}
 
-  '@jsr/dldc__zendb@8.0.4':
-    resolution: {integrity: sha512-DO+Twvb2VXePKmC7ippjCqN19ZCjgDVlYmFhofvgoL3nFY3/CAgDbYZURdNgXdQf1CskJmKqK2vP8T60vgUC7A==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__zendb/8.0.4.tgz}
+  '@jsr/dldc__zendb@9.0.0':
+    resolution: {integrity: sha512-XqpKnjflpHZGRM+tr+vS8F91yRoBV+vX0MaLc/dJ7Dx/BkpEli4+orB414YGD/mbtrkz6QevgEPjK6fwmQUQ9Q==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__zendb/9.0.0.tgz}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2815,7 +2815,7 @@ snapshots:
 
   '@jsr/dldc__sqlite@3.0.0': {}
 
-  '@jsr/dldc__zendb@8.0.4':
+  '@jsr/dldc__zendb@9.0.0':
     dependencies:
       '@jsr/dldc__erreur': 7.1.1
       '@jsr/dldc__sqlite': 3.0.0
