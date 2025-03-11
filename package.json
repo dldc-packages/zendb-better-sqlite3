@@ -43,28 +43,34 @@
   },
   "devDependencies": {
     "@dldc/zendb": "npm:@jsr/dldc__zendb@^10.0.0",
-    "@eslint/js": "^9.10.0",
-    "@types/better-sqlite3": "^7.6.11",
-    "@types/node": "^20.12.8",
-    "@vitest/coverage-v8": "^2.1.1",
+    "@eslint/js": "^9.22.0",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.10",
+    "@vitest/coverage-v8": "^3.0.8",
     "auto-changelog": "^2.5.0",
-    "better-sqlite3": "^11.3.0",
-    "eslint": "^9.10.0",
-    "prettier": "^3.3.3",
-    "release-it": "^17.6.0",
+    "better-sqlite3": "^11.8.1",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "release-it": "^18.1.2",
     "rimraf": "^6.0.1",
-    "tsup": "^8.2.4",
-    "typescript": "^5.6.2",
-    "typescript-eslint": "^8.5.0",
-    "vitest": "^2.1.1"
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1",
+    "vitest": "^3.0.8"
   },
   "peerDependencies": {
     "@dldc/zendb": "^10.0.0",
     "better-sqlite3": "^11.0.0"
   },
-  "packageManager": "pnpm@9.11.0+sha256.1c0e33f70e5df9eede84a357bdfa0b1f9dba6e58194628d48a1055756f553754",
+  "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
   }
 }
