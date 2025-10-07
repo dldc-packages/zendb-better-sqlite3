@@ -4,6 +4,7 @@ import BetterSqlite3 from 'better-sqlite3';
 export const BetterSqliteDriver: Driver.TDriver<BetterSqlite3.Database> =
   Driver.createDriverFromPrepare<BetterSqlite3.Database>({
     createDatabase: () => new BetterSqlite3(':memory:'),
+    closeDatabase: (db) => db.close(),
     exec: (db, sql) => db.exec(sql),
     prepare: (db, sql) => {
       const stmt = db.prepare(sql);

@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@dldc/zendb':
-        specifier: jsr:^11.0.0
-        version: '@jsr/dldc__zendb@11.0.0'
+        specifier: jsr:^12.0.0
+        version: '@jsr/dldc__zendb@12.0.0'
       '@eslint/js':
         specifier: ^9.37.0
         version: 9.37.0
@@ -452,8 +452,8 @@ packages:
   '@jsr/dldc__sqlite@3.1.1':
     resolution: {integrity: sha512-g8qPNSeQU712Yp9M93gyxQo3Na1a98VYTC+cKe5PEOXfPHN0L+PaCed6vwf+Hchpn96Thec8HVXl8uzCi2cKbw==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__sqlite/3.1.1.tgz}
 
-  '@jsr/dldc__zendb@11.0.0':
-    resolution: {integrity: sha512-SuQoWZEMtVizFRRNI8816YICN9G8UI+b2vVoP8J+343jF0m7txKiXxUzINNxWwJBoWiEDua2aWGR0GnqF8s96A==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__zendb/11.0.0.tgz}
+  '@jsr/dldc__zendb@12.0.0':
+    resolution: {integrity: sha512-Wt1LWtXHFKrkTetwpq7CleX1SMG8lUUlRY3E7+bh2yx+TZXV1fHR3Lbay5EediwPPl6NJxcfiEEfU+Sr/2500g==, tarball: https://npm.jsr.io/~/11/@jsr/dldc__zendb/12.0.0.tgz}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2564,7 +2564,7 @@ snapshots:
 
   '@jsr/dldc__sqlite@3.1.1': {}
 
-  '@jsr/dldc__zendb@11.0.0':
+  '@jsr/dldc__zendb@12.0.0':
     dependencies:
       '@jsr/dldc__erreur': 7.1.1
       '@jsr/dldc__sqlite': 3.1.1

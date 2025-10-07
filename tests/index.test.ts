@@ -748,7 +748,7 @@ describe('BetterSqliteDriver - Migration Operations', () => {
     });
 
     const db = new BetterSqlite3(':memory:');
-    const migratedDb = await migration.apply(db);
+    const [migratedDb] = await migration.apply(db);
 
     expect(migratedDb).toBeDefined();
 
@@ -790,7 +790,7 @@ describe('BetterSqliteDriver - Migration Operations', () => {
     });
 
     const db = new BetterSqlite3(':memory:');
-    const migratedDb = await migration.apply(db);
+    const [migratedDb] = await migration.apply(db);
 
     const version = BetterSqliteDriver.exec(migratedDb, Utils.userVersion());
     expect(version).toBe(2);
@@ -805,12 +805,12 @@ describe('BetterSqliteDriver - Migration Operations', () => {
     const db = new BetterSqlite3(':memory:');
 
     // Apply first time
-    const db1 = await migration.apply(db);
+    const [db1] = await migration.apply(db);
     const version1 = BetterSqliteDriver.exec(db1, Utils.userVersion());
     expect(version1).toBe(1);
 
     // Apply second time (should be idempotent)
-    const db2 = await migration.apply(db1);
+    const [db2] = await migration.apply(db1);
     const version2 = BetterSqliteDriver.exec(db2, Utils.userVersion());
     expect(version2).toBe(1);
 
