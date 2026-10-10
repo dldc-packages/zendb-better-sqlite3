@@ -1,25 +1,24 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "include": ["src", "tests", "vitest.config.ts"],
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "dist",
-    "target": "ESNext",
-    "module": "ES2020",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "importHelpers": false,
-    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "sourceMap": true,
-    "noEmit": true,
-    "types": [],
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@dldc/zendb-better-sqlite3": ["./src/mod.ts"]
+    },
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
-  }
+    "noUncheckedIndexedAccess": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true
+  },
+  "include": ["src", "tests", "vite.config.ts", "bump.config.ts"]
 }

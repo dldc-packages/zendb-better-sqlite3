@@ -7,70 +7,67 @@
   "bugs": {
     "url": "https://github.com/dldc-packages/zendb-better-sqlite3/issues"
   },
+  "license": "MIT",
+  "author": "Etienne Dldc <e.deladonchamps@gmail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dldc-packages/zendb-better-sqlite3.git"
   },
-  "license": "MIT",
-  "author": "Etienne Dldc <e.deladonchamps@gmail.com>",
-  "sideEffects": false,
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/mod.d.ts",
-      "import": "./dist/mod.js",
-      "require": "./dist/mod.cjs"
-    }
-  },
-  "main": "./dist/mod.js",
-  "types": "./dist/mod.d.ts",
   "files": [
     "dist"
   ],
-  "scripts": {
-    "build": "rimraf dist && tsup --format cjs,esm src/mod.ts --dts",
-    "build:watch": "tsup --watch --format cjs,esm src/mod.ts --dts",
-    "changelog": "auto-changelog --stdout --hide-credit true --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs",
-    "lint": "prettier . --check && eslint . && tsc --noEmit",
-    "lint:fix": "prettier . --write . && eslint . --fix",
-    "release": "release-it --only-version",
-    "test": "pnpm run lint && vitest run --coverage",
-    "test:run": "vitest run",
-    "test:watch": "vitest --watch",
-    "test:watch:coverage": "vitest --watch --coverage",
-    "typecheck": "tsc",
-    "typecheck:watch": "tsc --watch"
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/mod.d.mts",
+      "default": "./dist/mod.mjs"
+    }
   },
-  "devDependencies": {
-    "@dldc/zendb": "jsr:^12.0.0",
-    "@eslint/js": "^9.37.0",
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/node": "^24.7.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "auto-changelog": "^2.5.0",
-    "better-sqlite3": "^12.4.1",
-    "eslint": "^9.37.0",
-    "prettier": "^3.6.2",
-    "release-it": "^19.0.5",
-    "rimraf": "^6.0.1",
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.0",
-    "vitest": "^3.2.4"
-  },
-  "peerDependencies": {
-    "@dldc/zendb": "^12.0.0",
-    "better-sqlite3": "^12.0.0"
-  },
-  "packageManager": "pnpm@10.18.1+sha256.95a9702424f17c0f17eb0276d01417a169bdfeb61d5e2ccd36476f0e21a53ecd",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "better-sqlite3",
-      "esbuild"
-    ]
+  "scripts": {
+    "test": "vp test run",
+    "test:run": "vp test run",
+    "test:watch": "vp test",
+    "test:coverage": "vp test run --coverage",
+    "check": "vp check",
+    "lint": "vp lint",
+    "format": "vp fmt",
+    "pack": "vp pack",
+    "release:check": "vp check && vp test run && vp pack",
+    "release": "bumpp --execute \"npm run release:check\""
+  },
+  "devDependencies": {
+    "@arethetypeswrong/core": "^0.18.5",
+    "@dldc/zendb": "^12.0.0",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "better-sqlite3": "^13.0.3",
+    "bumpp": "^12.3.0",
+    "typescript": "^6.0.3",
+    "vite-plus": "^1.1.0"
+  },
+  "peerDependencies": {
+    "@dldc/zendb": "^12.0.0",
+    "better-sqlite3": "^12.0.0 || ^13.0.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.11.2",
+      "onFail": "warn"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "26.11.1",
+      "onFail": "warn"
+    }
+  },
+  "engines": {
+    "node": "^22.18.0 || ^24.11.0 || >=26.0.0"
   }
 }
